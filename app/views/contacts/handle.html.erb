@@ -1,0 +1,36 @@
+<h1>Contacts handler</h1>
+<hr>
+<h2>Asocia el campo con su número correspondiente</h2>
+<%= form_with model: @contact, url: contacts_create_path do |f| %>
+  <% (1...@contacts.length).each do |val| %>
+    <div class='form-group'>
+      <%= label_tag "#{val}", "Columna #{val}" %>
+      <%= f.select "#{val}", options_for_select(contact_fields_for_options), class: 'form-control' %>
+    </div>
+  <% end %>
+  <%= submit_tag "Create contacts", class: 'btn btn-primary'%>
+<% end %>
+
+<div class='media'>
+  <div class='media-body'>
+    <table class='table table-hover'>
+      <thead>
+        <tr>
+          <% (1...@contacts.length).each do |index| %>
+            <th><%= index %></th>
+          <% end %>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @contacts.each do |values| %>
+          <tr>
+            <% values.each_with_index do |value| %>
+              <td><%= value %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

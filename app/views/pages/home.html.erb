@@ -2,5 +2,9 @@
   Welcome <%= @user.username %>
 </h1>
 <span>
-<%= link_to 'log out', destroy_user_session_path, method: :delete %>
+  <%= link_to 'log out', destroy_user_session_path, method: :delete %>
 </span>
+
+<h2>
+  <%= link_to 'Import Contact', new_contact_path %>
+</h2>
