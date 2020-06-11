@@ -1,24 +1,18 @@
-# README
+bundle install
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+create the db
 
-Things you may want to cover:
+$rails db:create
 
-* Ruby version
+migrate the db
 
-* System dependencies
+$rails db:migrate
 
-* Configuration
+test
 
-* Database creation
+$bundle exec rspec
 
-* Database initialization
+run the project locally
 
-* How to run the test suite
+$rails s
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...

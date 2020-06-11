@@ -13,6 +13,8 @@
           <th>Birthdate</th>
           <th>Address</th>
           <th>Email</th>
+          <th>Credit Card Type</th>
+          <th>Credit Card Number</th>
           <th colspan="3"></th>
         </tr>
       </thead>
@@ -25,6 +27,8 @@
             <td><%= contact.birthdate %></td>
             <td><%= contact.address %></td>
             <td><%= contact.email %></td>
+            <td><%= contact.credit_card.franchise if contact.credit_card %></td>
+            <td><%= contact.credit_card.number if contact.credit_card%></td>
             <%# <td><%= link_to 'Show', contact %></td> %>
             <%# <td><%= link_to 'Edit', edit_contact_path(contact) %></td> %>
             <%# <td><%= link_to 'Destroy', contact, method: :delete, data: { confirm: 'Are you sure?' } %></td> %>

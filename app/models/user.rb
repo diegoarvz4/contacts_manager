@@ -6,5 +6,8 @@ class User < ApplicationRecord
 
   has_many :contacts
   has_many :contact_files
+
+  validates :username, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true
   
 end

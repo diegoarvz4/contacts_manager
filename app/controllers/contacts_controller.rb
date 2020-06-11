@@ -5,7 +5,7 @@ class ContactsController < ApplicationController
   before_action :set_contact, only: [:show, :edit, :update, :destroy]
 
   def index
-    @contacts = current_user.contacts
+    @contacts = current_user.contacts.includes(:credit_card)
   end
 
   def show
@@ -68,12 +68,35 @@ class ContactsController < ApplicationController
 
     @contacts = ActiveSupport::JSON.decode(session[:temp_contacts])
     potential_contacts = GenerateContacts.call(@contacts, params[:contact])
-    potential_contacts.each do |contact_hash|
-     current_user.contacts.create(contact_hash)
-    end
+    
+      potential_contacts.each do |contact_hash|
+        # contact_object = Contact.new;
+        # contact_hash.each do |key, value|
+        #   if key.to_s == 'credit_card'
+        #     credit_card = CreditCard.new({
+        #       number: value
+        #     })
+        #     contact_object = Contact.new(contact_object, credit_card: credit_card)
+        #   else
+        #     contact_object[key] = value
+        #   end
+        # end
+        puts "****"
+        puts contact_hash.select{|key| key.to_s != 'credit_card' }
+        puts "***"
+        begin
 
+          current_user.contacts.create!(contact_hash.select{|key| key.to_s != 'credit_card' }, credit_card: CreditCard.new(
+            number: contact_hash[:credit_card]
+          ))
+          
+        rescue StandardError => e
+          puts "----"
+          puts e
+        end
+      end
+    
     redirect_to contacts_path
-
   end
 
 
