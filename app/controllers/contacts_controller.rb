@@ -26,6 +26,9 @@ class ContactsController < ApplicationController
 
   def import
     file = params[:file]
+    current_user.contact_files.create(
+      status: 'En espera'
+    )
     contacts = ExtractContacts.call(file.path)
     session[:temp_contacts] = ActiveSupport::JSON.encode(contacts)
     redirect_to contacts_handle_path
@@ -37,18 +40,26 @@ class ContactsController < ApplicationController
   end
 
   def upload
-
+    current_contact_file = current_user.contact_files.last
+    current_contact_file.update(status: 'Procesando')
     @contacts = ActiveSupport::JSON.decode(session[:temp_contacts])
     potential_contacts = GenerateContacts.call(@contacts, params[:contact])
     begin
       potential_contacts.each do |contact_hash|
         contact = current_user.contacts.build(contact_hash.select{|key| key.to_s != 'credit_card' })
         contact.build_credit_card(number: contact_hash['credit_card'])
-        contact.save
+        unless contact.save
+          current_contact_file.file_errors.create(
+            contact_info: contact_hash.to_s,
+            message: contact.errors.full_messages.join(',')
+          )
+        end
       end
-      flash.notice = current_user.contacts.length > 0 ? 'Contactos agregados.' : '0 contactos agregados'  
+      flash.notice = current_user.contacts.length > 0 ? 'Contactos agregados.' : '0 contactos agregados' 
+      current_contact_file.update(status: 'Terminado') 
     rescue StandardError => e
       flash.alert = e.message
+      current_contact_file.update(status: 'Fallido')
     end
 
     redirect_to contacts_path

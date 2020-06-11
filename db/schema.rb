@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_11_045032) do
+ActiveRecord::Schema.define(version: 2020_06_11_153350) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,15 @@ ActiveRecord::Schema.define(version: 2020_06_11_045032) do
     t.index ["contact_id"], name: "index_credit_cards_on_contact_id"
   end
 
+  create_table "file_errors", force: :cascade do |t|
+    t.string "contact_info"
+    t.string "message"
+    t.bigint "contact_file_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contact_file_id"], name: "index_file_errors_on_contact_file_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -61,4 +70,5 @@ ActiveRecord::Schema.define(version: 2020_06_11_045032) do
   add_foreign_key "contact_files", "users"
   add_foreign_key "contacts", "users"
   add_foreign_key "credit_cards", "contacts"
+  add_foreign_key "file_errors", "contact_files"
 end

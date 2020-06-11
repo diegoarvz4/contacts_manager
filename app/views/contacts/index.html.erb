@@ -1,7 +1,23 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Contacts</h1>
+<h1>Contactos</h1>
+<hr>
+<div>
+  <%= link_to 'Ver estado de archivos importados', contact_files_path %>
+</div>
+<br>
+<div>
+  <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
+</div>
+<hr>
+<h3>Importar Contactos por medio de un CSV</h3>
+<%= form_tag import_contacts_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <hr>
+  <%= submit_tag "Upload contacts file", class: 'btn btn-primary'%>
+<%end %>
 
+<hr>
 
 <div class='media'>
   <div class='media-body'>
@@ -38,15 +54,4 @@
   </div>
 </div>
 
-<br>
 
-<%= link_to 'New Contact', new_contact_path %>
-
-<br>
-
-<h3>Import Contacts</h3>
-<%= form_tag import_contacts_path, multipart: true do %>
-  <%= file_field_tag :file %>
-  <hr>
-  <%= submit_tag "Upload contacts file", class: 'btn btn-primary'%>
-<%end %>

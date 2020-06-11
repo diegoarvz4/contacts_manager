@@ -1,0 +1,31 @@
+<h1>Historia de Archivos Importados</h1>
+<hr>
+<%= link_to 'Ir a Contactos', contacts_path %>
+<br>
+<%= link_to 'Log out', destroy_user_session_path, method: :delete %>
+<hr>
+
+<ul class='list-group'>
+  <% @contact_files.each do |contact_file| %>
+    <li class='list-group-item'>
+      <span>
+        <strong>ID:</strong> <%= contact_file.id %>
+      </span>
+      <span>
+        <strong>Estado:</strong> <%= contact_file.status %>
+      </span>
+      <span>
+        <%= contact_file.created_at.strftime("Creado el: %m/%d/%Y") %>
+      </span>
+      <span>
+        <strong>errors:</strong> 
+          <% contact_file.file_errors.each do |file_error| %>
+            <span> <strong>on:</strong> <%= file_error.contact_info %> </span>
+            <span> <strong>messages:</strong> <%= file_error.message %> </span>
+          <% end %>
+      </span>
+    </li>
+  <% end %>
+</ul>
+
+

@@ -2,7 +2,7 @@
 <hr>
 <h2>Asocia el campo con su número correspondiente</h2>
 <%= form_with model: @contact, url: contacts_create_path do |f| %>
-  <% (1...@contacts.length).each do |val| %>
+  <% (1..@contacts.length).each do |val| %>
     <div class='form-group'>
       <%= label_tag "#{val}", "Columna #{val}" %>
       <%= f.select "#{val}", options_for_select(contact_fields_for_options), class: 'form-control' %>
@@ -16,7 +16,7 @@
     <table class='table table-hover'>
       <thead>
         <tr>
-          <% (1...@contacts.length).each do |index| %>
+          <% (1..@contacts.length).each do |index| %>
             <th><%= index %></th>
           <% end %>
         </tr>

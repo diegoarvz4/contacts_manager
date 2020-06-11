@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  get 'contact_files/index'
   authenticated :user do
     root to: 'pages#home'
   end
@@ -15,6 +16,8 @@ Rails.application.routes.draw do
   resources :contacts, only: %i[index new create] do 
     collection { post :import }
   end
+
+  resources :contact_files, only: %i[index]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   
 end

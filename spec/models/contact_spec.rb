@@ -115,7 +115,7 @@ describe Contact do
   end
 
   it "is valid with two types of date format on birthdate" do
-    date_1 = '2018-12-22'
+    date_1 = '1994-03-03'
     date_2 = '20181222'
     date_3 = '2018-01-31'
     date_4 = '20180101'
@@ -139,7 +139,7 @@ describe Contact do
     date_1 = '2018-22-12'
     date_2 = '2018--12--22'
     date_3 = '31201815'
-    date_4 = '01-03-2018'
+    date_4 = '01-032018'
 
     contact = FactoryBot.build(:contact, birthdate: date_1, user: @user)
     expect(contact).to_not be_valid
