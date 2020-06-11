@@ -1,6 +1,3 @@
-require "csv";
-
-
 class ContactsController < ApplicationController
   before_action :set_contact, only: [:show, :edit, :update, :destroy]
 
@@ -8,14 +5,8 @@ class ContactsController < ApplicationController
     @contacts = current_user.contacts.includes(:credit_card).paginate(page: params[:page])
   end
 
-  def show
-  end
-
   def new
     @contact = Contact.new
-  end
-
-  def edit
   end
 
   def create
@@ -32,25 +23,6 @@ class ContactsController < ApplicationController
     end
   end
 
-  def update
-    respond_to do |format|
-      if @contact.update(contact_params)
-        format.html { redirect_to @contact, notice: 'Contact was successfully updated.' }
-        format.json { render :show, status: :ok, location: @contact }
-      else
-        format.html { render :edit }
-        format.json { render json: @contact.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def destroy
-    @contact.destroy
-    respond_to do |format|
-      format.html { redirect_to contacts_url, notice: 'Contact was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
 
   def import
     file = params[:file]
@@ -70,9 +42,9 @@ class ContactsController < ApplicationController
     potential_contacts = GenerateContacts.call(@contacts, params[:contact])
     begin
       potential_contacts.each do |contact_hash|
-          contact = current_user.contacts.build(contact_hash.select{|key| key.to_s != 'credit_card' })
-          contact.build_credit_card(number: contact_hash['credit_card'])
-          contact.save
+        contact = current_user.contacts.build(contact_hash.select{|key| key.to_s != 'credit_card' })
+        contact.build_credit_card(number: contact_hash['credit_card'])
+        contact.save
       end
       flash.notice = current_user.contacts.length > 0 ? 'Contactos agregados.' : '0 contactos agregados'  
     rescue StandardError => e

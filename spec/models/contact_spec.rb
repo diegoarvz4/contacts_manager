@@ -114,5 +114,48 @@ describe Contact do
     expect(contact).to be_valid
   end
 
+  it "is valid with two types of date format on birthdate" do
+    date_1 = '2018-12-22'
+    date_2 = '20181222'
+    date_3 = '2018-01-31'
+    date_4 = '20180101'
+
+    contact = FactoryBot.build(:contact, birthdate: date_1, user: @user)
+    expect(contact).to be_valid
+
+    contact = FactoryBot.build(:contact, birthdate: date_2, user: @user)
+    expect(contact).to be_valid
+
+
+    contact = FactoryBot.build(:contact, birthdate: date_3, user: @user)
+    expect(contact).to be_valid
+
+
+    contact = FactoryBot.build(:contact, birthdate: date_4, user: @user)
+    expect(contact).to be_valid
+  end
+
+  it "is invalid without the two types of date format on birthdate" do
+    date_1 = '2018-22-12'
+    date_2 = '2018--12--22'
+    date_3 = '31201815'
+    date_4 = '01-03-2018'
+
+    contact = FactoryBot.build(:contact, birthdate: date_1, user: @user)
+    expect(contact).to_not be_valid
+
+
+    contact = FactoryBot.build(:contact, birthdate: date_2, user: @user)
+    expect(contact).to_not be_valid
+
+
+    contact = FactoryBot.build(:contact, birthdate: date_3, user: @user)
+    expect(contact).to_not be_valid
+
+
+    contact = FactoryBot.build(:contact, birthdate: date_4, user: @user)
+    expect(contact).to_not be_valid
+  end
+
 
 end

@@ -1,3 +1,7 @@
+live version on Heroku
+
+https://polar-taiga-69566.herokuapp.com/
+
 bundle install
 
 create the db

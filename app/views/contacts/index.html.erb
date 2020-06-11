@@ -25,7 +25,7 @@
             <tr>
               <td><%= contact.name %></td>
               <td><%= contact.phone %></td>
-              <td><%= contact.birthdate %></td>
+              <td><%= contact.birthdate.strftime('%Y %B %d') %></td>
               <td><%= contact.address %></td>
               <td><%= contact.email %></td>
               <td><%= contact.credit_card.franchise if contact.credit_card %></td>
