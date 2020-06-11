@@ -24,7 +24,7 @@ describe CreditCard do
   end
 
   it "is invalid with a short number" do
-    credit_card = FactoryBot.build(:credit_card, number: '123', contact: @contact)
+    credit_card = FactoryBot.build(:credit_card, number: '000', contact: @contact)
     expect(credit_card).to_not be_valid
   end
 

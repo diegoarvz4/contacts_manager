@@ -19,22 +19,21 @@
         </tr>
       </thead>
 
-      <tbody>
-        <% @contacts.each do |contact| %>
-          <tr>
-            <td><%= contact.name %></td>
-            <td><%= contact.phone %></td>
-            <td><%= contact.birthdate %></td>
-            <td><%= contact.address %></td>
-            <td><%= contact.email %></td>
-            <td><%= contact.credit_card.franchise if contact.credit_card %></td>
-            <td><%= contact.credit_card.number if contact.credit_card%></td>
-            <%# <td><%= link_to 'Show', contact %></td> %>
-            <%# <td><%= link_to 'Edit', edit_contact_path(contact) %></td> %>
-            <%# <td><%= link_to 'Destroy', contact, method: :delete, data: { confirm: 'Are you sure?' } %></td> %>
-          </tr>
-        <% end %>
-      </tbody>
+      <%= will_paginate %>
+        <tbody>
+          <% @contacts.each do |contact| %>
+            <tr>
+              <td><%= contact.name %></td>
+              <td><%= contact.phone %></td>
+              <td><%= contact.birthdate %></td>
+              <td><%= contact.address %></td>
+              <td><%= contact.email %></td>
+              <td><%= contact.credit_card.franchise if contact.credit_card %></td>
+              <td><%= generate_string_in_last_four(contact.credit_card.last_four_digits) if contact.credit_card%></td>
+            </tr>
+          <% end %>
+        </tbody>
+      <%= will_paginate %>
     </table>
   </div>
 </div>
@@ -47,6 +46,7 @@
 
 <h3>Import Contacts</h3>
 <%= form_tag import_contacts_path, multipart: true do %>
-  <%= file_field_tag :file%>
-  <%= submit_tag "Upload contacts file"%>
+  <%= file_field_tag :file %>
+  <hr>
+  <%= submit_tag "Upload contacts file", class: 'btn btn-primary'%>
 <%end %>

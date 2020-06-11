@@ -1,10 +1,11 @@
 <h1>
   Welcome <%= @user.username %>
 </h1>
+<hr>
 <span>
-  <%= link_to 'log out', destroy_user_session_path, method: :delete %>
+  <%= link_to 'Log Out', destroy_user_session_path, method: :delete, class: 'btn btn-secondary' %>
 </span>
 
 <h2>
-  <%= link_to 'Import Contact', new_contact_path %>
+  <%= link_to 'Contacts Index', contacts_path %>
 </h2>

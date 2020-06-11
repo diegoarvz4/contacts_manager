@@ -13,4 +13,8 @@ module ContactsHelper
 
   end
 
+  def generate_string_in_last_four(last_four_digits)
+    "**** "*4 + last_four_digits
+  end
+
 end

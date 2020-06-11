@@ -31,5 +31,4 @@ describe User do
     expect(new_user.errors[:username]).to include("has already been taken")
   end
 
-
 end
